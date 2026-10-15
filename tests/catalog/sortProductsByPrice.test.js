@@ -13,10 +13,9 @@ describe('sortProductsByPrice', () => {
     ]);
   });
   test("товары [1, 3, 4] c 'asc' сортируются как [3, 4, 1]", () => {
+    const productsToSort = products.filter(({ id }) => [1, 3, 4].includes(id));
     expect(
-      sortProductsByPrice(products, 'asc')
-        .filter(({ id }) => [1, 3, 4].includes(id))
-        .map((product) => product.id),
+      sortProductsByPrice(productsToSort, 'asc').map((product) => product.id),
     ).toEqual([3, 4, 1]);
   });
   test("все товары c 'desc' сортируются как [1, 2, 4, 5, 6, 3]", () => {
@@ -25,20 +24,38 @@ describe('sortProductsByPrice', () => {
     ).toEqual([1, 2, 4, 5, 6, 3]);
   });
   test("товары [3, 1, 4] c 'desc' сортируются как [1, 4, 3]", () => {
+    const productsToSort = products.filter(({ id }) => [3, 1, 4].includes(id));
     expect(
-      sortProductsByPrice(products, 'desc')
-        .filter(({ id }) => [3, 1, 4].includes(id))
-        .map((product) => product.id),
+      sortProductsByPrice(productsToSort, 'desc').map((product) => product.id),
     ).toEqual([1, 4, 3]);
   });
   test("товары [5, 2, 6] c 'desc' сортируются как [2, 5, 6]", () => {
+    const productsToSort = products.filter(({ id }) => [5, 2, 6].includes(id));
     expect(
-      sortProductsByPrice(products, 'desc')
-        .filter(({ id }) => [5, 2, 6].includes(id))
-        .map((product) => product.id),
+      sortProductsByPrice(productsToSort, 'desc').map((product) => product.id),
     ).toEqual([2, 5, 6]);
   });
-  test.todo("'asc' не меняет исходный массив [1, 3, 4]");
-  test.todo("'desc' не меняет исходный массив [1, 3, 4]");
-  test.todo('направление по умолчанию не меняет исходный массив всех товаров');
+  test("'asc' не меняет исходный массив [1, 3, 4]", () => {
+    const productsToSort = products.filter(({ id }) => [1, 3, 4].includes(id));
+    const productsCopy = [...productsToSort];
+    expect(
+      sortProductsByPrice(productsToSort, 'asc').map((product) => product.id),
+    ).toEqual([3, 4, 1]);
+    expect(productsToSort).toEqual(productsCopy);
+  });
+  test("'desc' не меняет исходный массив [1, 3, 4]", () => {
+    const productsToSort = products.filter(({ id }) => [1, 3, 4].includes(id));
+    const productsCopy = [...productsToSort];
+    expect(
+      sortProductsByPrice(productsToSort, 'desc').map((product) => product.id),
+    ).toEqual([1, 4, 3]);
+    expect(productsToSort).toEqual(productsCopy);
+  });
+  test('направление по умолчанию не меняет исходный массив всех товаров', () => {
+    const productsCopy = [...products];
+    expect(sortProductsByPrice(products).map((product) => product.id)).toEqual([
+      3, 6, 5, 4, 2, 1,
+    ]);
+    expect(products).toEqual(productsCopy);
+  });
 });
