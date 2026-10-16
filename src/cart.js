@@ -12,7 +12,7 @@ function addToCart(cart, product, quantity) {
     throw new RangeError('Вы пытаетесь купить товара больше, чем у нас есть');
   }
 
-  if (quantity <= 0) {
+  if (quantity === 0) {
     throw new RangeError('Нельзя купить товар количеством 0');
   }
 
@@ -24,9 +24,27 @@ function addToCart(cart, product, quantity) {
 
   return cart;
 }
-function changeQuantity() {
-  return notImplemented();
+
+function changeQuantity(cart, id, quantity) {
+  const productInCart = cart.find((item) => item.id === id);
+  const quantityInCart = productInCart ? productInCart.quantity : 0;
+  const stock = productInCart ? productInCart.stock : 0;
+
+  if (productInCart) {
+    if (stock - quantityInCart < quantity) {
+      throw new RangeError('Вы пытаетесь купить товара больше, чем у нас есть');
+    }
+
+    if (quantity === 0) {
+      throw new RangeError('Нельзя купить товар количеством 0');
+    }
+
+    productInCart.quantity = quantity;
+  }
+
+  return cart;
 }
+
 function removeFromCart() {
   return notImplemented();
 }
