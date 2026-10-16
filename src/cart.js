@@ -55,8 +55,7 @@ function calculateCartSubtotal(cart) {
 
 function calculateOrderTotal(cart, promocode) {
   const subtotal = calculateCartSubtotal(cart);
-  const delivery =
-    cart.reduce((sumQ, el) => sumQ + el.quantity, 0) < 2 ? 30000 : 0;
+  const delivery = subtotal < 50000 ? 30000 : 0;
   const discount =
     promocode === 'SAVE10' && subtotal >= 20000 ? Math.floor(subtotal / 10) : 0;
 
