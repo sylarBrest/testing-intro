@@ -8,7 +8,7 @@ function addToCart(cart, product, quantity) {
   const productInCart = cart.find((item) => item.id === id);
   const quantityInCart = productInCart ? productInCart.quantity : 0;
 
-  if (stock - quantityInCart < quantity) {
+  if (stock - quantityInCart <= quantity) {
     throw new RangeError('Вы пытаетесь купить товара больше, чем у нас есть');
   }
 
@@ -31,7 +31,7 @@ function changeQuantity(cart, id, quantity) {
   const stock = productInCart ? productInCart.stock : 0;
 
   if (productInCart) {
-    if (stock - quantityInCart < quantity) {
+    if (stock - quantityInCart <= quantity) {
       throw new RangeError('Вы пытаетесь купить товара больше, чем у нас есть');
     }
 
